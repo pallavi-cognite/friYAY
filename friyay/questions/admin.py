@@ -1,3 +1,9 @@
 from django.contrib import admin
+from .models import Meeting
+from .models import Question
+from .models import Response
 
-# Register your models here.
+
+admin.site.register(Meeting)
+admin.site.register(Question)
+admin.site.register(Response)

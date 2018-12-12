@@ -1,27 +1,30 @@
 from django.db import models
+from datetime import datetime
 
 class Meeting(models.Model):
     name = models.CharField(max_length=150)
-    creation_time = models.DateTimeField()
+    creation_time = models.DateTimeField(default = datetime.now)
     password = models.CharField(max_length=100)
     archived = models.BooleanField()
-    associated_questions = models.Choices()
 
 # question, comment, or answer
 class Entry(models.Model):
 
-    entry_text = models.CharField()
-    creation_time = models.DateTimeField()
-    creator_name = models.CharField(max_length=150)
-    upvotes = models.PositiveSmallIntegerField()
-    downvotes = models.PositiveSmallIntegerField()
+    entry_text = models.CharField(max_length=500, blank=True)
+    creation_time = models.DateTimeField(default = datetime.now)
+    creator_name = models.CharField(max_length=150, blank=True)
+    upvotes = models.PositiveSmallIntegerField(default=0)
+    downvotes = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        abstract = True
 
 class Question(Entry):
-    parent_id = models.ForeignKey(Meeting, on_delete=models.CASCADE)
+    parent = models.ForeignKey(Meeting, on_delete=models.CASCADE, default="")
 
 class Response(Entry):
     response_type_choices = (('question', 'Question'),
-                             ('comment', 'Comment')
+                             ('comment', 'Comment'),
                              ('answer', 'Answer'))
-    response_type = models.CharField(choices= response_type_choices, default='comment')
-    parent_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+    response_type = models.CharField(choices= response_type_choices, default='comment', max_length=100)
+    parent = models.ForeignKey(Question, on_delete=models.CASCADE, default="")
