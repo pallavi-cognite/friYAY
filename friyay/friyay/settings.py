@@ -30,7 +30,13 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3002',
+    'localhost:3001'
+)
+
 INSTALLED_APPS = [
+    'corsheaders', # pip3 install django-cors-headers
     'questions.apps.QuestionsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

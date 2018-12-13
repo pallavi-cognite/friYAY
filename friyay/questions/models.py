@@ -31,8 +31,6 @@ class Question(Entry):
                              self.creator_name, self.upvotes, self.downvotes, self.parent)
         # self.response_set.all()
 
-
-
 class Response(Entry):
     response_type_choices = (('question', 'Question'),
                              ('comment', 'Comment'),
