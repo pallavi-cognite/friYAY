@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 CORS_ORIGIN_WHITELIST = (
     'localhost:3002',
-    'localhost:3001'
+    'localhost:3000',
 )
 
 INSTALLED_APPS = [
