@@ -23,7 +23,7 @@ question_resource = QuestionResource()
 response_resource = ResponseResource()
 
 urlpatterns = [
-    # path('questions/', include('questions.urls')),
+    path('questions/', include('questions.urls')),
     path('admin/', admin.site.urls),
     path('meetings/', include(meeting_resource.urls)),
     path('questions/', include(question_resource.urls)),
