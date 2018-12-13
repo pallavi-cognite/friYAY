@@ -13,6 +13,50 @@ def myconverter(o):
     if isinstance(o, datetime.datetime):
         return o.__str__()
 
+@csrf_exempt
+def vote_question(request):
+    if request.method == 'POST':
+        question_id = request.GET.get('id', 0)
+        direction = request.GET.get('direction', 0)
+        question = Question.objects.get(pk=question_id)
+
+        if direction == "upvote":
+            question.upvotes = question.upvotes + 1
+        elif direction == "downvote":
+            question.downvotes = question.downvotes + 1
+
+        question.save()
+        data = json.dumps({'up': question.upvotes, 'down': question.downvotes}, default = myconverter)
+        return HttpResponse(data, content_type='application/json')
+
+@csrf_exempt
+def vote_response(request):
+    if request.method == 'POST':
+        response_id = request.GET.get('id', 0)
+        direction = request.GET.get('direction', 0)
+        response = Response.objects.get(pk=response_id)
+
+        if direction == "upvote":
+            response.upvotes = response.upvotes + 1
+        elif direction == "downvote":
+            response.downvotes = response.downvotes + 1
+
+        response.save()
+        data = json.dumps({'up': response.upvotes, 'down': response.downvotes}, default = myconverter)
+        return HttpResponse(data, content_type='application/json')
+
+@csrf_exempt
+def toggle_meeting_archived(request):
+    if request.method == 'POST':
+        meeting_id = request.GET.get('id', 0)
+        meeting = Meeting.objects.get(pk=meeting_id)
+        meeting.archived = not meeting.archived
+
+        meeting.save()
+        data = json.dumps({'archived': meeting.archived}, default = myconverter)
+        return HttpResponse(data, content_type='application/json')
+
+
 class QuestionSerializer(rest_serializer.ModelSerializer):
     parent = rest_serializer.PrimaryKeyRelatedField(queryset=Meeting.objects.all())
     class Meta:
