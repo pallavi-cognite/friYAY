@@ -6,3 +6,6 @@ Backend for the FriYAY Application. Written in Django.
 
 # Running on Local
 `python3 manage.py runserver`
+
+# Database
+=> Cloud SQL instance on Cognite Development
