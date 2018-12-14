@@ -18,3 +18,5 @@ Edit app.yaml with the new image
 
 `user`
 `cognite`
+
+https://docs.google.com/document/d/1P0S4DQSxHCteTB97SbUL0Ze0aDTF_UnVn55zZb6unQc/edit
