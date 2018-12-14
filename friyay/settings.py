@@ -35,6 +35,8 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
 )
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 INSTALLED_APPS = [
     'corsheaders', # pip3 install django-cors-headers
     'questions.apps.QuestionsConfig',
