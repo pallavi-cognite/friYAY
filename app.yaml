@@ -39,10 +39,7 @@ spec:
       containers:
       - name: friyay-app
         # Replace  with your project ID or use `make template`
-        image: eu.gcr.io/cognitedata-development/friyay-shela:1
-        # This setting makes nodes pull the docker image every time before
-        # starting the pod. This is useful when debugging, but should be turned
-        # off in production.
+        image: eu.gcr.io/cognitedata-development/friyay-test:6
         env:
             # [START cloudsql_secrets]
             - name: DATABASE_USER
@@ -59,6 +56,32 @@ spec:
         ports:
         - containerPort: 8080
 
+      # [START proxy_container]
+      - image: gcr.io/cloudsql-docker/gce-proxy:1.05
+        name: cloudsql-proxy
+        command: ["/cloud_sql_proxy", "--dir=/cloudsql",
+                  "-instances=cognitedata-development:europe-west3:friyay=tcp:5432",
+                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        volumeMounts:
+          - name: cloudsql-oauth-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
+          - name: ssl-certs
+            mountPath: /etc/ssl/certs
+          - name: cloudsql
+            mountPath: /cloudsql
+      # [END proxy_container]
+      # [START volumes]
+      volumes:
+        - name: cloudsql-oauth-credentials
+          secret:
+            secretName: cloudsql-oauth-credentials
+        - name: ssl-certs
+          hostPath:
+            path: /etc/ssl/certs
+        - name: cloudsql
+          emptyDir:
+      # [END volumes]
 # [END kubernetes_deployment]
 
 ---
@@ -85,4 +108,3 @@ spec:
   selector:
     app: friyay
 # [END service]
-

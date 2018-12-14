@@ -25,7 +25,7 @@ SECRET_KEY = '7flmiei2f%7=bhw)77_q&+*#i4cvax+z*#qfbwhc*rcamubu*k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['35.195.7.194', '127.0.0.1']
 
 
 # Application definition
@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 CORS_ORIGIN_WHITELIST = (
     'localhost:3002',
     'localhost:3000',
+    'https://friyay-8a9c7.firebaseapp.com',
+    'friyay-8a9c7.firebaseapp.com',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -84,23 +86,22 @@ WSGI_APPLICATION = 'friyay.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-	'USER': 'postgres',
-	'PASSWORD': 'admin',
-	'HOST': '35.198.70.143',
-	'PORT':'',
+    	'USER': os.getenv('DATABASE_USER'),
+    	'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+    	'PORT':'5432',
     }
 }
+
+DATABASES['default']['HOST'] = '/cloudsql/cognitedata-development:europe-west3:friyay'
+if os.getenv('GAE_INSTANCE'):
+    pass
+else:
+    DATABASES['default']['HOST'] = '127.0.0.1'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -137,6 +138,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-STATIC_ROOT='static'
+STATIC_ROOT='static/'
 # STATIC_URL = '/static/'
 STATIC_URL = 'http://storage.googleapis.com/friyay/static/'
