@@ -25,7 +25,9 @@ SECRET_KEY = '7flmiei2f%7=bhw)77_q&+*#i4cvax+z*#qfbwhc*rcamubu*k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'friyay.herokuapp.com'
+]
 
 
 # Application definition
