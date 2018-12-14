@@ -25,9 +25,7 @@ SECRET_KEY = '7flmiei2f%7=bhw)77_q&+*#i4cvax+z*#qfbwhc*rcamubu*k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'friyay.herokuapp.com'
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -139,5 +137,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
-STATIC_URL = '/static/'
+STATIC_ROOT='static'
+# STATIC_URL = '/static/'
+STATIC_URL = 'http://storage.googleapis.com/friyay/static/'
